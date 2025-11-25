@@ -1,24 +1,21 @@
 //tsrafce
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { userSignupSchema, type SignupInputState } from "@/schema/userSchema";
 import {Loader2, LockKeyhole, Mail, Phone, User} from "lucide-react"
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 
-interface SignupInputState{
-  email:string;
-  password:string;
-  fullName:string;
-  contact:string;
-}
 const Signup = () => {
   
   const [input, setInput]=useState<SignupInputState>({
     email:"",
     password:"",
-    fullName:"",
+    fullname:"",
     contact:"",
   })
+
+  const [errors,setErrors]=useState<Partial<SignupInputState>>({});
 
   const changeEventHadler=(e:ChangeEvent<HTMLInputElement>)=>{
      const {name, value}=e.target;
@@ -27,6 +24,12 @@ const Signup = () => {
 
   const signupSubmitHandler=(e:FormEvent)=>{
       e.preventDefault();
+      const result=userSignupSchema.safeParse(input);
+            if(!result.success){
+               const { fieldErrors} = result.error.flatten();
+               setErrors(fieldErrors as Partial<SignupInputState>);
+               return ;
+            }
       console.log(input);
   }
 
@@ -45,11 +48,14 @@ const Signup = () => {
             type="text"
             placeholder="Full Name"
             className="pl-10 focus-visible:ring-1"
-            name="fullName"
-            value={input.fullName}
+            name="fullname"
+            value={input.fullname}
             onChange={changeEventHadler}
           />
           <User className="absolute inset-y-9.5 inset-x-2" />
+          {
+            errors&&<span className="text-sm text-red-500">{errors.fullname}</span>
+          }
         </div>
 
         <div className="relative flex flex-col items-start gap-2 mb-4">
@@ -63,6 +69,9 @@ const Signup = () => {
             onChange={changeEventHadler}
           />
           <Phone className="absolute inset-y-9.5 inset-x-2" />
+          {
+            errors&&<span className="text-sm text-red-500">{errors.contact}</span>
+          }
         </div>
 
         <div className="relative flex flex-col items-start gap-2 mb-4">
@@ -76,6 +85,9 @@ const Signup = () => {
             onChange={changeEventHadler}
           />
           <Mail className="absolute inset-y-9.5 inset-x-2" />
+          {
+            errors&&<span className="text-sm text-red-500">{errors.email}</span>
+          }
         </div>
 
         <div className="relative flex flex-col items-start gap-2 mb-4">
@@ -89,6 +101,9 @@ const Signup = () => {
             onChange={changeEventHadler}
           />
           <LockKeyhole className="absolute inset-y-9.5 inset-x-2" />
+          {
+            errors&&<span className="text-sm text-red-500">{errors.password}</span>
+          }
         </div>
 
         <div className="pb-4">

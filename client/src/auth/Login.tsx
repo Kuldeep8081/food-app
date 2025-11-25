@@ -1,20 +1,19 @@
 //tsrafce
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { userLoginSchema, type LoginInputState } from "@/schema/userSchema";
 import {Loader2, LockKeyhole, Mail} from "lucide-react"
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 
-interface LoginInputState{
-  email:string;
-  password:string;
-}
 const Login = () => {
   
   const [input, setInput]=useState<LoginInputState>({
     email:"",
     password:"",
   })
+
+  const [errors,setErrors]=useState<Partial<LoginInputState>>({});
 
   const changeEventHadler=(e:ChangeEvent<HTMLInputElement>)=>{
      const {name, value}=e.target;
@@ -23,6 +22,12 @@ const Login = () => {
 
   const loginSubmitHandler=(e:FormEvent)=>{
       e.preventDefault();
+      const result=userLoginSchema.safeParse(input);
+      if(!result.success){
+         const { fieldErrors} = result.error.flatten();
+         setErrors(fieldErrors as Partial<LoginInputState>);
+         return ;
+      }
       console.log(input);
   }
 
@@ -45,6 +50,9 @@ const Login = () => {
             onChange={changeEventHadler}
           />
           <Mail className="absolute inset-y-9.5 inset-x-2" />
+          {
+            errors&&<span className="text-sm text-red-500">{errors.email}</span>
+          }
         </div>
 
         <div className="relative flex flex-col items-start gap-2 mb-4">
@@ -58,17 +66,24 @@ const Login = () => {
             onChange={changeEventHadler}
           />
           <LockKeyhole className="absolute inset-y-9.5 inset-x-2" />
+          {
+            errors&&<span className="text-sm text-red-500">{errors.password}</span>
+          }
         </div>
 
-        <div className="pb-4">
+        <div className="pb-4 flex flex-col">
           {
           loading?(<Button disabled className="w-full hover:border-b-black-800" ><Loader2 className="mr-2 h-4 w-4 animate-spin"/> Please Wait</Button>)
           :<Button type="submit"  className="w-full hover:border-b-black-800" >Login</Button>
         }
+         
+         <div className="mt-4">
+            <Link  to="/forgot-password">Forgot Password?</Link>
+         </div>
         </div>
 
         <div
-        className="mt-4 mb-2 border-2 border-t-muted border-l-muted border-r-muted" 
+        className="text-blue-500 mt-4 mb-2 border-2 border-t-muted border-l-muted border-r-muted" 
         ></div>
         
         <p className="mb-4">
