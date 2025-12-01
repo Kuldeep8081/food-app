@@ -51,45 +51,56 @@ Users can explore the menu, add items to cart, place orders, and manage their pr
 ---
 
 ## 🗂️ Project Structure
+
+```
 root/
 ├── client/        # React + TypeScript frontend
 ├── server/        # Node + Express + TypeScript backend
 └── README.md
-
+```
 ## ⚙️ Getting Started
 ### 1️⃣ Clone the Repository
+```
 git clone https://github.com/Kuldeep8081/food-app.git
 cd food-app
+```
 ### 2️⃣ Setup Backend (server)
+```
 cd server
 npm install
-or
+# or
 yarn install
-
+```
 ## Environment Variables
+```
 Create a .env file inside the server folder:
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 CLIENT_URL=http://localhost:5173
-
+```
 ## Run Backend
+```
 npm run dev
-or
+# or
 yarn dev
-
+```
 ### 3️⃣ Setup Frontend (client)
+```
 cd ../client
 npm install
-or
+# or
 yarn install
-
-If you're using a .env for frontend (optional):
+```
+### If you're using a .env for frontend (optional):
+```
 VITE_API_BASE_URL=http://localhost:5000/api
+```
 
 ### Run Frontend
+```
 npm run dev
-or
+# or
 yarn dev
-
+```
 
