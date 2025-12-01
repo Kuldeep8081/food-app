@@ -51,8 +51,6 @@ Users can explore the menu, add items to cart, place orders, and manage their pr
 ---
 
 ## 🗂️ Project Structure
-
-```bash
 root/
 ├── client/        # React + TypeScript frontend
 ├── server/        # Node + Express + TypeScript backend
@@ -60,7 +58,7 @@ root/
 
 ## ⚙️ Getting Started
 ### 1️⃣ Clone the Repository
-git clone https://github.com/your-username/food-app.git
+git clone https://github.com/Kuldeep8081/food-app.git
 cd food-app
 ### 2️⃣ Setup Backend (server)
 cd server
