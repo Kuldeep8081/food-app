@@ -25,7 +25,7 @@ const Navbar = () => {
   const loading = false;
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className=" max-w-7xl mx-auto">
       <div className="flex items-center justify-between h-14 ">
         <Link to="/">
           <h1 className="font-bold md:font-extrabold text-2xl">Food</h1>
